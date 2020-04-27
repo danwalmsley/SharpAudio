@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace SharpAudio.Codec
+namespace SharpAudio.FFMPEG
 {
     public abstract class Decoder
     {
@@ -22,7 +22,7 @@ namespace SharpAudio.Codec
         /// <summary>
         /// Specifies the length of the decoded data. If not available returns 0
         /// </summary>
-        public virtual TimeSpan Duration => TimeSpan.FromSeconds((float)_numSamples / ( _audioFormat.SampleRate * _audioFormat.Channels));
+        public virtual TimeSpan Duration => TimeSpan.FromSeconds((float)_numSamples / (_audioFormat.SampleRate * _audioFormat.Channels));
 
         /// <summary>
         /// Wether or not the decoder reached the end of data
@@ -60,5 +60,7 @@ namespace SharpAudio.Codec
         }
 
         public bool Probe(ref byte[] fourcc) => false;
+        public abstract void Start();
+        public abstract void Pause();
     }
 }

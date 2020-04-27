@@ -1,14 +1,10 @@
-﻿using SharpAudio.Codec.Mp3;
-using SharpAudio.Codec.Vorbis;
-using SharpAudio.Codec.Wave;
+﻿using SharpAudio.FFMPEG;
 using System;
 using System.Diagnostics;
 using System.IO;
-using System.Linq;
-using System.Threading;
 using System.Threading.Tasks;
 
-namespace SharpAudio.Codec
+namespace SharpAudio.FFMPEG
 {
     public sealed class SoundStream : IDisposable
     {
@@ -79,12 +75,14 @@ namespace SharpAudio.Codec
 
             Source = engine.CreateSource();
 
-            _decoder = new FFmpegDecoder(stream);
+            _decoder = new FFMPEG.FFMPEGDecoder(stream);
 
             _chain = new BufferChain(engine);
 
-            _silence = new byte[(int)(_decoder.Format.Channels * _decoder.Format.SampleRate * SampleQuantum.TotalSeconds)];
-            
+            _silence = new byte[(int)(_decoder.Format.Channels * _decoder.Format.SampleRate)];
+
+            _decoder.Start();
+
             // Prime the buffer chain with empty data.
             _chain.QueueData(Source, _silence, Format);
 
@@ -98,7 +96,7 @@ namespace SharpAudio.Codec
         {
             Source.Play();
             _timer.Start();
-
+            
             Task.Factory.StartNew(async () =>
             {
                 while (Source.IsPlaying())

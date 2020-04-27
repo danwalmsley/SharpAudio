@@ -1,4 +1,4 @@
-﻿using SharpAudio.Codec;
+﻿using SharpAudio.FFMPEG;
 using System;
 using System.Collections.Generic;
 using System.Text;

@@ -1,10 +1,10 @@
-﻿using SharpAudio.Codec;
+﻿using SharpAudio.FFMPEG;
 using System;
 using System.IO;
 using System.Threading;
 using CommandLine;
 using System.Collections.Generic;
-using SharpAudio.Codec.Mp3;
+using SharpAudio.FFMPEG;
 using System.Linq;
 
 namespace SharpAudio.Sample

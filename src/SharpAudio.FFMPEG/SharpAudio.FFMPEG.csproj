@@ -3,7 +3,7 @@
   <PropertyGroup>
     <TargetFramework>netstandard2.1</TargetFramework>
     <LangVersion>8.0</LangVersion>
-    <DocumentationFile>bin/SharpAudio.Codec.xml</DocumentationFile>
+    <DocumentationFile>bin/SharpAudio.FFMPEG.xml</DocumentationFile>
     <AllowUnsafeBlocks>True</AllowUnsafeBlocks>
   </PropertyGroup>
 

@@ -8,9 +8,9 @@ using System.IO;
 using System.Threading.Tasks;
 using System.Collections.Generic;
 
-namespace SharpAudio.Codec.Mp3
+namespace SharpAudio.FFMPEG
 {
-    public class FFmpegDecoder : Decoder
+    public class FFmpegDecoderx : Decoder
     {
         private const int fsStreamSize = 8192;
         private byte[] ffmpegFSBuf = new byte[fsStreamSize];
@@ -58,7 +58,7 @@ namespace SharpAudio.Codec.Mp3
 
 
 
-        public FFmpegDecoder(Stream src)
+        public FFmpegDecoderx(Stream src)
         {
             targetStream = src;
 
@@ -145,7 +145,7 @@ namespace SharpAudio.Codec.Mp3
                 throw new FormatException($"FFMPEG: Resampler has not been properly initialized");
             }
 
-            ff.av_packet = ffmpeg.av_packet_alloc();
+            ff.av_src_packet = ffmpeg.av_packet_alloc();
             ff.av_src_frame = ffmpeg.av_frame_alloc();
 
             this.tempSampleBuf = new byte[(int)(_audioFormat.SampleRate * _audioFormat.Channels * 2)];
@@ -296,11 +296,11 @@ namespace SharpAudio.Codec.Mp3
             {
                 unsafe
                 {
-                    if (ffmpeg.av_read_frame(ff.format_context, ff.av_packet) >= 0)
+                    if (ffmpeg.av_read_frame(ff.format_context, ff.av_src_packet) >= 0)
                     {
-                        if (ff.av_packet->stream_index == stream_index)
+                        if (ff.av_src_packet->stream_index == stream_index)
                         {
-                            int len = Decode(ff.av_stream->codec, ff.av_src_frame, ref frameFinished, ff.av_packet);
+                            int len = Decode(ff.av_stream->codec, ff.av_src_frame, ref frameFinished, ff.av_src_packet);
                             if (frameFinished > 0)
                             {
                                 ProcessAudioFrame(ref tempSampleBuf, ref count);
@@ -357,6 +357,16 @@ namespace SharpAudio.Codec.Mp3
 
             fixed (AVFrame** x = &ff.av_dst_frame)
                 ffmpeg.av_frame_free(x);
+        }
+
+        public override void Start()
+        {
+            throw new NotImplementedException();
+        }
+
+        public override void Pause()
+        {
+            throw new NotImplementedException();
         }
     }
 }

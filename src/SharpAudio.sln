@@ -10,7 +10,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SharpAudio.Tests", "SharpAu
 		{AD19351A-0D24-444D-BD1D-6E341751AD37} = {AD19351A-0D24-444D-BD1D-6E341751AD37}
 	EndProjectSection
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SharpAudio.Codec", "SharpAudio.Codec\SharpAudio.Codec.csproj", "{5986D531-84E3-4AD2-9401-6DAAC0B99A72}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SharpAudio.FFMPEG", "SharpAudio.FFMPEG\SharpAudio.FFMPEG.csproj", "{5986D531-84E3-4AD2-9401-6DAAC0B99A72}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SharpAudio.Sample", "SharpAudio.Sample\SharpAudio.Sample.csproj", "{47471B24-824D-4F9F-8544-4628B9754232}"
 EndProject
