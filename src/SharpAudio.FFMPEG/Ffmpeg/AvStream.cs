@@ -23,17 +23,17 @@ namespace SharpAudio.FFMPEG
             _buffer = new byte[_bufSize];
             this.read_l = new avio_alloc_context_read_packet(ReadPacket);
             this.seek_l = new avio_alloc_context_seek(SeekFunc);
-
-            fixed (byte* bufPtr = _buffer)
-            {
+            var inputBuffer = (byte*)ffmpeg.av_malloc((ulong)_bufSize);
+ 
+                
                 //create an unwritable context
-                _context = ffmpeg.avio_alloc_context(bufPtr,
+                _context = ffmpeg.avio_alloc_context(inputBuffer,
                     _bufSize, 0, null,
                     read_l,
                     null,
                     seek_l
                    );
-            }
+            
         }
 
         public void Attach(AVFormatContext* ctx)
@@ -60,10 +60,9 @@ namespace SharpAudio.FFMPEG
 
         private int ReadPacket(void* opaque, byte* buffer, int bufferSize)
         {
-            lock (readlock)
                 try
                 {
-                    var readCount = _stream.Read(_buffer, 0, _buffer.Length);
+                    var readCount = _stream.Read(_buffer, 0, bufferSize);
                     if (readCount > 0)
                         Marshal.Copy(_buffer, 0, (IntPtr)buffer, readCount);
 
@@ -78,7 +77,6 @@ namespace SharpAudio.FFMPEG
         private long SeekFunc(void* opaque, long offset, int whence)
         {
 
-            lock (readlock)
             {
                 SeekOrigin origin;
 

@@ -42,7 +42,7 @@ namespace SharpAudio.FFMPEG
             ffmpeg.swr_convert_frame(_resampler, _resampled, _decoded);
 
             //get the size of our data buffer
-            int data_size = ffmpeg.av_samples_get_buffer_size(null, _codecCtx->channels, _resampled->nb_samples, (AVSampleFormat)_resampled->format, 1);
+            int data_size = ffmpeg.av_samples_get_buffer_size(null, _resampled->channels, _resampled->nb_samples, (AVSampleFormat)_resampled->format, 1);
 
             if (_tmpBuf is null || _tmpBuf?.Length < data_size)
             {
@@ -64,6 +64,7 @@ namespace SharpAudio.FFMPEG
             _resampled = ffmpeg.av_frame_alloc();
             _resampled->channel_layout = (ulong)ffmpeg.av_get_default_channel_layout(_source._DESIRED_CHANNELS);
             _resampled->sample_rate = _source._DESIRED_SAMPLE_RATE;
+            _resampled->channels = _source._DESIRED_CHANNELS;
             _resampled->format = (int)_source._DESIRED_SAMPLE_FORMAT;
 
             // Fixes SWR @ 0x2192200] Input channel count and layout are unset error.

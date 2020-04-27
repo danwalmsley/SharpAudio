@@ -114,7 +114,6 @@ namespace SharpAudio.FFMPEG
                         {
                             _isFinished = true;
                         }
- 
             }
         }
 
@@ -123,7 +122,7 @@ namespace SharpAudio.FFMPEG
             //should reset to frame 0 
             if (_state == PlayState.Stopped)
             {
-                // Reset();
+                Reset();
                 _state = PlayState.Playing;
             }
 
